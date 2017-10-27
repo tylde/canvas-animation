@@ -30,6 +30,8 @@ ImageAnimation = function(context, image, options) {
     this.startWidth = options.width;
     this.startHeight = options.height;
 
+    this.isScalable = options.isScalable;
+
     this.startTime = Date.now();
     this.time = Date.now();
     this.isAnimating = false;
@@ -41,8 +43,9 @@ ImageAnimation = function(context, image, options) {
 
 ImageAnimation.prototype.draw = function(path) {
     if (path === undefined) {
-        this.ratio = this.context.canvas.width/1920;
-        // console.log(this.ratio)
+        if (this.isScalable === true) this.ratio = this.context.canvas.width/1920;
+        else this.ratio = 1;
+        
         
         this.context.save();
         this.context.translate((this.x + this.width/2) * this.ratio, (this.y + this.height/2) * this.ratio);

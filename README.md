@@ -8,10 +8,16 @@ Create object using function constructor:
     new ImageAnimation(context, image, options)
 ```
 Parameters:
-* context: a canvas 2d context,
-* image: an image to animate,
-* options: an object with image initial data: { x, y, width, height }
+* context: a canvas 2d context, **(REQUIRED)**
+* image: an image to animate, **(REQUIRED)**
+* options : an object with image initial data: { x, y, width, height, isScalable } **(REQUIRED)**
+    - x: x position for left-top image corner
+    - y: y position for left-top image corner
+    - width: image width
+    - height: image width
+    - isScalable: if true image position and size are based on window width (1920px)
 
+<hr>
 
 ### Functions
 #### .move(options, time)
@@ -22,18 +28,18 @@ Parameters:
 
 ```javascript
     var imgAnim = new ImageAnimation(ctx, image, { x: 100, y: 100, width: 150, height: 90 });
-    imgAnim.move({ x: 200 }, 1000)
+    imgAnim.move({ x: 200, ease: 'ease-in-out' }, 1000)
 ```
 ##### Available options:
 * x
 * y
 * deg
 * scale
-* ease
+* ease (ease-in, ease-out, ease-in-out)
 
+<hr>
 
 ### Example
-Define canvas and images:
 ```html
 <html>
     <head>
@@ -43,8 +49,8 @@ Define canvas and images:
         <img id="test-image-1" src="img/1.png" style="display: none">
         <canvas id="canvas-animation"></canvas>
 
-        <script src="index.js"></script>
         <script src="canvas_animation.js"></script>
+        <script src="script.js"></script>
     </body>
 </html>
 ```
