@@ -1,7 +1,5 @@
 # Canvas Animation Library
 
-
-# How to use:
 ## ImageAnimation class
 
 ### Definition
@@ -9,19 +7,30 @@ Create object using function constructor:
 ```
     new ImageAnimation(context, image, options)
 ```
-Where:
-1. context: a canvas 2d context,
-2. image: an image to animate,
-3. options: an object: { x, y, width, height }
+Parameters:
+* context: a canvas 2d context,
+* image: an image to animate,
+* options: an object with image initial data: { x, y, width, height }
 
 
 ### Functions
 #### .move(options, time)
+
+##### Parameters:
+* options: an object with
+* time: time in milliseconds
+
+```javascript
+    var imgAnim = new ImageAnimation(ctx, image, { x: 100, y: 100, width: 150, height: 90 });
+    imgAnim.move({ x: 200 }, 1000)
 ```
-    new ImageAnimation(context, image, options)
-```
-1. options: an object: { x, y, width, height }
-2. time: time in milliseconds
+##### Available options:
+* x
+* y
+* deg
+* scale
+* ease
+
 
 ### Example
 Define canvas and images:
@@ -56,5 +65,4 @@ var animation = function() {
 animation();
 
 imgAnim1.move({ x: -50, y: -25, ease: 'ease-in-out' }, 500)
-
 ```
