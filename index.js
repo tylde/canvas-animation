@@ -6,7 +6,7 @@ var easeIn = function(x, amp) {
     return Math.pow(x, amp);
 }
 var easeOut = function(x, amp) {
-    return x * (2-x);
+    return 1 + Math.pow(-1, amp + 1) * Math.pow(x - 1, amp)
 }
 
 // ======================================================================================================
@@ -81,9 +81,18 @@ ImageAnimation.prototype.move = function(options, time) {
         var changer = function() {
             var progress = (Date.now() - this.startTime) / time;
             var position = 0;
-            if (options.ease === 'ease-in') position = easeIn(progress, 2);
-            else if (options.ease === 'ease-out') position = easeOut(progress);
-            else if (options.ease === 'ease-in-out') position = easeInOut(progress, 2.6);
+            if (options.ease === 'ease-in-1') position = easeIn(progress, 2);
+            if (options.ease === 'ease-in-2') position = easeIn(progress, 3);
+            if (options.ease === 'ease-in-3') position = easeIn(progress, 4);
+            if (options.ease === 'ease-in-4') position = easeIn(progress, 5);
+            else if (options.ease === 'ease-out-1') position = easeOut(progress, 2);
+            else if (options.ease === 'ease-out-2') position = easeOut(progress, 3);
+            else if (options.ease === 'ease-out-3') position = easeOut(progress, 4);
+            else if (options.ease === 'ease-out-4') position = easeOut(progress, 5);
+            else if (options.ease === 'ease-in-out-1') position = easeInOut(progress, 1.5);
+            else if (options.ease === 'ease-in-out-2') position = easeInOut(progress, 2);
+            else if (options.ease === 'ease-in-out-3') position = easeInOut(progress, 2.75);
+            else if (options.ease === 'ease-in-out-4') position = easeInOut(progress, 4);
             else position = progress;
             
             if (progress < 1) {

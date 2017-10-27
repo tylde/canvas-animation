@@ -4,13 +4,13 @@
 
 ### Definition
 Create object using function constructor:
-```
+```javascript
     new ImageAnimation(context, image, options)
 ```
 Parameters:
-* context: a canvas 2d context, **(REQUIRED)**
-* image: an image to animate, **(REQUIRED)**
-* options : an object with image initial data: { x, y, width, height, isScalable } **(REQUIRED)**
+* context: a canvas 2d context,
+* image: an image to animate,
+* options: an object with image initial data: { x, y, width, height, isScalable }
     - x: x position for left-top image corner
     - y: y position for left-top image corner
     - width: image width
@@ -28,14 +28,15 @@ Parameters:
 
 ```javascript
     var imgAnim = new ImageAnimation(ctx, image, { x: 100, y: 100, width: 150, height: 90 });
-    imgAnim.move({ x: 200, ease: 'ease-in-out' }, 1000)
+    imgAnim.move({ x: 200, ease: 'ease-in-out-3' }, 1000)
 ```
 ##### Available options:
 * x
 * y
 * deg
 * scale
-* ease (ease-in, ease-out, ease-in-out)
+* ease (ease-in-\*, ease-out-\*, ease-in-out-\*)  * - power (1-4)
+
 
 <hr>
 
@@ -70,5 +71,5 @@ var animation = function() {
 }
 animation();
 
-imgAnim1.move({ x: -50, y: -25, ease: 'ease-in-out' }, 500)
+imgAnim1.move({ x: -50, y: -25, ease: 'ease-in-out-3' }, 500)
 ```
