@@ -6,10 +6,12 @@ var easeIn = function(x, amp) {
     return Math.pow(x, amp);
 }
 var easeOut = function(x, amp) {
-    // return 1 + Math.pow(x - 1, amp);
     return x * (2-x);
 }
 
+// ======================================================================================================
+// ===== IMAGE ANIMATION ================================================================================
+// ======================================================================================================
 
 ImageAnimation = function(context, image, options) {
     console.log(options)
@@ -125,9 +127,10 @@ ImageAnimation.prototype.stop = function() {
     this.isAnimating = false;
 }
 
-ImageAnimation.prototype.scale = function(options, time) {
-    
-}
+
+// ======================================================================================================
+// ===== OVERLAY ANIMATION ==============================================================================
+// ======================================================================================================
 
 
 function OverlayAnimation() {
