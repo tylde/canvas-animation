@@ -4,13 +4,13 @@
 
 ### Definition
 Create object using function constructor:
-```javascript
-    new ImageAnimation(context, image, options)
+```
+    new ImageAnimation(context: CanvasContext2d, image: Image, options: Object)
 ```
 Parameters:
 * context: a canvas 2d context,
 * image: an image to animate,
-* options: an object with image initial data: { x, y, width, height, isScalable }
+* options: an object with image initial data: { x, y, width, height, isScalable } - all required!
     - x: x position for left-top image corner
     - y: y position for left-top image corner
     - width: image width
@@ -20,21 +20,21 @@ Parameters:
 <hr>
 
 ### Functions
-#### .move(options, time)
+#### .move(options: Object, time: Number)
 
 ##### Parameters:
-* options: an object with
+* options: an object with available image transform options
 * time: time in milliseconds
 
 ```javascript
-    var imgAnim = new ImageAnimation(ctx, image, { x: 100, y: 100, width: 150, height: 90 });
+    var imgAnim = new ImageAnimation(ctx, image, { x: 100, y: 100, width: 150, height: 90, isScalable: true });
     imgAnim.move({ x: 200, ease: 'ease-in-out-3' }, 1000)
 ```
 ##### Available options:
-* x
-* y
-* deg
-* scale
+* x: move image by x position [pixels]
+* y: move image by y position [pixels]
+* deg: rotate image around center [degrees]
+* scale: scale image 
 * ease (ease-in-\*, ease-out-\*, ease-in-out-\*)  * - power (1-4)
 
 
@@ -62,7 +62,7 @@ var ctx = canvas.getContext('2d');
 
 var image1 = document.getElementById('test-image-1');
 var imgAnim1 = new ImageAnimation(ctx, image1, {
-    x: 100, y: 50, width: 128, height: 128,
+    x: 100, y: 50, width: 128, height: 128, isScalable: true
 })
 
 var animation = function() {

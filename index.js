@@ -14,7 +14,6 @@ var easeOut = function(x, amp) {
 // ======================================================================================================
 
 ImageAnimation = function(context, image, options) {
-    console.log(options)
     this.context = context;
     this.image = image;
     this.x = options.x;
@@ -42,11 +41,10 @@ ImageAnimation = function(context, image, options) {
 }
 
 ImageAnimation.prototype.draw = function(path) {
-    if (path === undefined) {
-        if (this.isScalable === true) this.ratio = this.context.canvas.width/1920;
-        else this.ratio = 1;
-        
-        
+    if (this.isScalable === true) this.ratio = this.context.canvas.width/1920;
+    else this.ratio = 1;
+
+    if (path === undefined) { 
         this.context.save();
         this.context.translate((this.x + this.width/2) * this.ratio, (this.y + this.height/2) * this.ratio);
         this.context.rotate(this.deg * Math.PI / 180)
@@ -54,15 +52,35 @@ ImageAnimation.prototype.draw = function(path) {
         this.context.restore();
     }
     else {
-        // draw clip with patch and then image
-        // this.context.save()
-        // ctx.beginPath();
-        // ctx.closePath();
-        // ctx.clip();
-        // this.context.drawImage(this.image, this.position.x, this.position.y, this.width, this.height);
-        // this.context.restore();
-    }
+        var isPathGood = function(pathArgument) {
+            if (pathArgument instanceof Array) {
+                for (var i = 0; i < pathArgument.length; i++) {
+                    if (!(pathArgument[i] instanceof Array) || pathArgument[i].length !== 2) {
+                        console.error('Invalid path');
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
 
+        this.context.save();
+        this.context.translate((this.x + this.width/2) * this.ratio, (this.y + this.height/2) * this.ratio);
+        this.context.rotate(this.deg * Math.PI / 180);
+
+        if (isPathGood(path)) {
+            this.context.beginPath();
+            this.context.moveTo(path[0][0] * this.ratio, path[0][1] * this.ratio);
+            for (var i = 1; i < path.length; i++) {
+                this.context.lineTo(path[i][0] * this.ratio, path[i][1] * this.ratio);
+            }
+            this.context.closePath();
+            this.context.clip();
+        }
+        
+        this.context.drawImage(this.image, -this.width/2 * this.ratio, -this.height/2 * this.ratio, this.width * this.ratio, this.height * this.ratio);
+        this.context.restore();
+    }
 }
 
 ImageAnimation.prototype.move = function(options, time) {
