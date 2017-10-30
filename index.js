@@ -138,8 +138,8 @@ ImageAnimation.prototype.move = function(options, time) {
                     }
                 }
                 else {
-                    if (options.x !== undefined && options.scale === undefined) this.x = this.startX + options.x * position;
-                    if (options.y !== undefined && options.scale === undefined) this.y = this.startY + options.y * position;
+                    if (options.x !== undefined) this.x = this.startX + options.x * position;
+                    if (options.y !== undefined) this.y = this.startY + options.y * position;
                 }
 
                 this.timer = setTimeout(changer.bind(this), 5)
