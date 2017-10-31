@@ -52,10 +52,10 @@ ImageAnimation.prototype.draw = function(path) {
         this.context.restore();
     }
     else {
-        var isPathGood = function(pathArgument) {
-            if (pathArgument instanceof Array) {
-                for (var i = 0; i < pathArgument.length; i++) {
-                    if (!(pathArgument[i] instanceof Array) || pathArgument[i].length !== 2) {
+        var isPathGood = function(path) {
+            if (path instanceof Array) {
+                for (var i = 0; i < path.length; i++) {
+                    if (!(path[i] instanceof Array) || path[i].length !== 2) {
                         console.error('Invalid path');
                         return false;
                     }
@@ -163,6 +163,75 @@ ImageAnimation.prototype.stop = function() {
 // ======================================================================================================
 
 
-function OverlayAnimation() {
+function OverlayAnimation(canvas, context) {
+    this.canvas = canvas
+    this.context = context;
+}
+
+OverlayAnimation.prototype.slideToXCenterThenToYBorders = function(options) {
+    // options { time: Number[ms], colors: Object, middlePosition: Number[0-1] }
+    this.colors = {
+        intro1: options.colors.color1,
+        intro2: options.colors.color2
+    }
+    this.time = options.time;
+    this.middlePosition = options.middlePosition;
+    this.introProgressP1 = 0;
+    this.introProgressP2 = 0;
+    this.introP1StartTime = Date.now();
+    this.introP2StartTime = null;
+
+    var updateCanvasSize = function() {
+        this.canvas.setAttribute('width', window.innerWidth);            
+        this.canvas.setAttribute('height',  window.innerHeight);
+    },
+
+    var introP1 = function() {
+        this.introProgressP1 = (Date.now() - this.introP1StartTime) / this.time * 0.45;
+        if (this.introProgressP1 <= 1) {
+            var position = easeInOut(that.introProgressP1, that.introAmp);
+    
+            ctx.clearRect(0, 0, that.DOM.canvas.width, that.DOM.canvas.height);
+            ctx.fillStyle = that.colors.intro1;
+            ctx.fillRect(0, 0, Math.ceil(that.DOM.canvas.width * that.middlePosition * position), that.DOM.canvas.height);
+            ctx.fillStyle = that.colors.intro2;
+            ctx.fillRect(that.DOM.canvas.width - that.DOM.canvas.width * (1 - that.middlePosition) * position, 0, Math.ceil(that.DOM.canvas.width * (1 - that.middlePosition) * position), that.DOM.canvas.height);
+        
+            rAF(introP1);
+        }
+        else if (that.introProgressP1 > 1 && that.introProgressP1 <= (that.introP1Length + that.introP1P2Delay) / that.introP1Length) {
+            that.introProgressP1 = (Date.now() - that.introP1StartTime) / that.introP1Length;
+            rAF(introP1);
+        }
+        else {
+            // that.DOM.expandWorkspace.classList.remove('hidden');
+            that.introP2StartTime = Date.now();
+            rAF(introP2);
+        }
+    }
+    var introP2 = function() {
+        that.introProgressP2 = (Date.now() - that.introP2StartTime) / that.introP2Length;
+        if (that.introProgressP2 <= 1) { 
+            var position = easeInOut(that.introProgressP2, that.introAmp);
+
+            ctx.clearRect(0, 0, that.DOM.canvas.width, that.DOM.canvas.height);
+            ctx.fillStyle = that.colors.intro1;                              
+            ctx.fillRect(0, 0, Math.ceil(that.DOM.canvas.width * that.middlePosition), that.DOM.canvas.height - that.DOM.canvas.height * position);
+            ctx.fillStyle = that.colors.intro2;
+            ctx.fillRect(that.DOM.canvas.width * that.middlePosition, that.DOM.canvas.height * position, Math.ceil(that.DOM.canvas.width * (1 - that.middlePosition)), that.DOM.canvas.height - that.DOM.canvas.height * position);
+            
+            rAF(introP2);
+        }
+        else {
+                // that.DOM.canvas.classList.add('hidden');
+                // that.startExpand();
+        }
+    }
+    rAF(introP1);
+
+
+
+
+
 
 }
