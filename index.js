@@ -189,13 +189,13 @@ OverlayAnimation.prototype.slideToXCenterThenToYBorders = function(options) {
     var introP1 = function() {
         this.introProgressP1 = (Date.now() - this.introP1StartTime) / this.time * 0.45;
         if (this.introProgressP1 <= 1) {
-            var position = easeInOut(that.introProgressP1, that.introAmp);
+            var position = easeInOut(this.introProgressP1, 2.6);
     
-            ctx.clearRect(0, 0, that.DOM.canvas.width, that.DOM.canvas.height);
-            ctx.fillStyle = that.colors.intro1;
-            ctx.fillRect(0, 0, Math.ceil(that.DOM.canvas.width * that.middlePosition * position), that.DOM.canvas.height);
-            ctx.fillStyle = that.colors.intro2;
-            ctx.fillRect(that.DOM.canvas.width - that.DOM.canvas.width * (1 - that.middlePosition) * position, 0, Math.ceil(that.DOM.canvas.width * (1 - that.middlePosition) * position), that.DOM.canvas.height);
+            context.clearRect(0, 0, that.DOM.canvas.width, that.DOM.canvas.height);
+            context.fillStyle = that.colors.intro1;
+            context.fillRect(0, 0, Math.ceil(that.DOM.canvas.width * that.middlePosition * position), that.DOM.canvas.height);
+            context.fillStyle = that.colors.intro2;
+            context.fillRect(that.DOM.canvas.width - that.DOM.canvas.width * (1 - that.middlePosition) * position, 0, Math.ceil(that.DOM.canvas.width * (1 - that.middlePosition) * position), that.DOM.canvas.height);
         
             rAF(introP1);
         }
@@ -214,11 +214,11 @@ OverlayAnimation.prototype.slideToXCenterThenToYBorders = function(options) {
         if (that.introProgressP2 <= 1) { 
             var position = easeInOut(that.introProgressP2, that.introAmp);
 
-            ctx.clearRect(0, 0, that.DOM.canvas.width, that.DOM.canvas.height);
-            ctx.fillStyle = that.colors.intro1;                              
-            ctx.fillRect(0, 0, Math.ceil(that.DOM.canvas.width * that.middlePosition), that.DOM.canvas.height - that.DOM.canvas.height * position);
-            ctx.fillStyle = that.colors.intro2;
-            ctx.fillRect(that.DOM.canvas.width * that.middlePosition, that.DOM.canvas.height * position, Math.ceil(that.DOM.canvas.width * (1 - that.middlePosition)), that.DOM.canvas.height - that.DOM.canvas.height * position);
+            context.clearRect(0, 0, that.DOM.canvas.width, that.DOM.canvas.height);
+            context.fillStyle = that.colors.intro1;                              
+            context.fillRect(0, 0, Math.ceil(that.DOM.canvas.width * that.middlePosition), that.DOM.canvas.height - that.DOM.canvas.height * position);
+            context.fillStyle = that.colors.intro2;
+            context.fillRect(that.DOM.canvas.width * that.middlePosition, that.DOM.canvas.height * position, Math.ceil(that.DOM.canvas.width * (1 - that.middlePosition)), that.DOM.canvas.height - that.DOM.canvas.height * position);
             
             rAF(introP2);
         }
